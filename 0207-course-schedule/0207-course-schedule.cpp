@@ -35,6 +35,37 @@ bool dfs(int node, int vis[], vector<int> adj[]) {
                 int v = prerequisites[i][1];
                 adj[u].push_back(v);
             }
-        return !(isCyclic(numCourses,adj));
+        // return !(isCyclic(numCourses,adj));
+        int V = numCourses;
+        int indegree[V];
+        memset(indegree,0,sizeof indegree);
+        for (int i = 0; i < V; i++){
+            for (auto it: adj[i]){
+                indegree[it]++;
+            }
+        }
+
+        queue<int> q;
+        for (int i = 0; i < V; i++){
+            if (indegree[i] == 0){
+                q.push(i);
+            }
+        }
+
+        vector<int> schedule;
+        while (!q.empty()){
+            int node = q.front();
+            q.pop();
+            schedule.push_back(node);
+            for (auto it: adj[node]){
+                indegree[it]--;
+                if (indegree[it] == 0){
+                    q.push(it);
+                }
+            }
+        }
+        if(schedule.size() != V)
+            return false;
+        return true;
     }
 };
