@@ -5,6 +5,7 @@ using namespace std;
 // } Driver Code Ends
 class Solution
 {
+    // WORKS FINE EVEN IF WE USE QUEUE INSTEAD OF PRIORITY QUEUE
 	public:
 	//Function to find the shortest distance of all the vertices
     //from the source vertex S.
@@ -13,12 +14,12 @@ class Solution
         for(int i = 0; i < V; i++)
             dist[i] = 1e9;
         dist[S] = 0;
-        priority_queue<pair<int,int>> pq;
+        queue<pair<int,int>> pq;
         pq.push({S,0});
         
         while(!pq.empty()) {
-            int node = pq.top().first;
-            int weight = pq.top().second;
+            int node = pq.front().first;
+            int weight = pq.front().second;
             pq.pop();
             for(auto it : adj[node]) {
                 int adjNode = it[0];
